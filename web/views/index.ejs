@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLIP-Branches - the Text-to-Image Search Engine on Steroids</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="top-bar">
+        <a href="/" id="dataset-button" class="icon-button"><i class="fas fa-home"></i></a>
+        <div class="dropdown">
+            <button class="icon-button"><i class="fas fa-folder"></i></button>
+            <div class="dropdown-content">
+                <% datasetOptions.forEach(function(dataset) { %>
+                    <a href="#" onclick="selectDataset('<%= dataset %>')"><%= dataset %></a>
+                <% }); %>
+            </div>
+        </div>
+        <button class="icon-button"><i class="fas fa-info-circle"></i></button>
+    </div>
+
+    <div class="search-container">
+        <h1 class="title">CLIP-Branches</h1>
+        <!-- <h1 style="white-space: nowrap;font-size:50px">
+            <span style="color: #7FDBFF; font-family: 'Arial';">C</span>
+            <span style="color: #0074D9; font-family: 'Courier New';">L</span>
+            <span style="color: red; font-family: 'Georgia';">I</span>
+            <span style="color: #FFDC00; font-family: 'Comic Sans MS';">P</span>
+            <span style="color: #FF851B; font-family: 'Verdana';">-</span>
+            <span style="color: rgb(51, 173, 51);">Branches</span>
+
+        </h1> -->
+        <form id="search-form" action="/search" method="get">
+            <input type="text" id="search-box" name="query" placeholder="Search for images" class="search-input">
+            <input type="hidden" id="selected-dataset" name="dataset" value="<%= defaultDataset %>">
+            <button type="submit" class="search-button">Search</button>
+        </form>
+    </div>
+
+    <footer>
+        <!-- Footer content here -->
+    </footer>
+    <script>
+        let selectedDataset = '<%= defaultDataset %>'; // Use the default dataset from the server
+    </script>
+    <script src="/js/init.js"></script>
+</body>
+</html>

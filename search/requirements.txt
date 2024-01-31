@@ -1,0 +1,24 @@
+fastapi
+uvicorn
+numpy
+pydantic-settings
+python-dotenv
+scikit-learn
+faiss-cpu
+pyproj
+tqdm
+ftfy
+regex
+pillow
+torchvision
+torch
+Cython==0.29.33
+joblib
+pandas
+python-dateutil
+pytz
+scipy
+six
+threadpoolctl
+faiss-cpu
+#clip @ git+https://github.com/openai/CLIP.git@a1d071733d7111c9c014f024669f959182114e33

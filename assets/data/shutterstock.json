@@ -1,0 +1,10 @@
+{"name":"shutterstock",
+"version":"1.0.0",
+"dataset":{
+    "type":"folder",
+    "format":"csv",
+    "path":"/mnt/shutterstock/shutterstock_dataset.csv",
+    "image_path":"/mnt/shutterstock"
+}
+
+}

@@ -1,0 +1,8 @@
+{"name":"cifar",
+"version":"1.0.0",
+"dataset":{
+    "type":"array",
+    "format":"npy",
+    "path":"cifar10_image_dataset.npy"
+}
+}

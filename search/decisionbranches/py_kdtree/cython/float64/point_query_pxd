@@ -1,0 +1,9 @@
+cpdef int recursive_search_point(double[::1] ,int , double[:,:,::1] ,int ,
+                    int ,const double[:,:,::1] )
+
+cdef (long*,double*) _recursive_search_point(int ,double[::1] ,int , int , double[:,:,::1] ,int , int ,
+                          long* , double* ,const double[:,:,::1] ) nogil
+
+cdef double get_max(double* ,int ) nogil
+
+cdef int get_max_idx(double* ,int ) nogil

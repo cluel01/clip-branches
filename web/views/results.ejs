@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0,user-scalable=no"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <title>Search Results</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="top-bar">
+        <a href="/" class="icon-button"> <i class="fas fa-home"></i></a>
+        <div class="dropdown">
+            <button class="icon-button"><i class="fas fa-search"></i></button> <!-- Dataset Icon -->
+            <div class="dropdown-content">
+                <% searchOptions.forEach(function(searcher) { %>
+                    <a href="#" onclick="selectSearcher('<%= searcher %>')"><%= searcher %></a>
+                <% }); %>
+            </div>
+        </div>
+        <button id="helpButton" class="icon-button"><i class="fas fa-info-circle"></i></button> <!-- Info Icon -->
+        <!-- button for sql code -->
+        <button id="sqlButton" class="icon-button"><i class="fas fa-database"></i></button>
+        <!-- Add more buttons as needed -->
+    </div>
+
+    <div id="popupBox" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="popupText"></p>
+        </div>
+    </div>
+
+    <div class="results-container">
+        <div class="stats-container">
+            <div class="column">
+                <h2>Results</h2>
+                <p id="query-time">Query Time: <span id="query-time-value"><%= queryTime %></span> seconds</p>
+                <p id="num-results">Number of Results: <span id="num-results-value"><%= images.length %></span></p>
+                <button id="greenButton" onclick="markAllImages('positive')" style="background-color: green; color: white";>All</button>
+                <button id="redButton" onclick="markAllImages('negative')" style="background-color: red; color: white";>All</button>
+                <button id="greyButton" onclick="markAllImages('none')" style="background-color: grey; color: white";>All</button>
+
+            </div>
+            <div class="column">
+                <h2>Config</h2>
+                <div class="slider-container">
+                    <label for="negative-slider">Adjust Negative Samples:</label>
+                    <input type="range" id="negative-slider" name="negative-slider" min="0" max="<%= maxNegSamples %>" step="100" value="<%= negSamples %>" oninput="updateNumResults('negative', this.value)">
+                    <span id="negative-slider-value" style="margin-left: 10px;"><%= negSamples %></span>
+                </div>
+                <div class="slider-container">
+                    <label for="negative-weight-slider">Adjust Negative Weight:</label>
+                    <input type="range" id="negative-weight-slider" name="negative-weight-slider" min="1" max="100" step="1" value="<%= negativeWeight %>" oninput="updateNumResults('weight', this.value)">
+                    <span id="negative-weight-slider-value" style="margin-left: 10px;"><%= negativeWeight %></span>
+                </div>
+                
+            </div>
+        </div>
+
+        
+
+        <button id="finetune-search-button" class="centered-button">Fine-tune Search</button>
+        <!-- <form action="/finetune-search" method="get">   
+            <button id="finetune-search-button">Fine-tune Search</button>
+        </form> -->
+        
+        <!--
+        <div class="images-grid">
+            <% images.forEach(image => { %>
+                <div class="image-frame">
+                    <img src="<%= image.url %>" alt="<%= image.alt %>">
+                    
+                </div>
+            <% }) %> 
+        </div>-->
+        <div class="images-grid">
+            <!-- <% for(let i = 0; i < 12; i++) { %>
+                <div class="image-frame" id="image-frame-<%= i %>">
+                    <img src="https://placehold.co/150x150/000000/FFF?text=Image+<%= i + 1 %>"
+                         alt="Placeholder Image <%= i + 1 %>"
+                         onclick="markImage(event, 'image-frame-<%= i %>')">
+                </div>
+            <% } %> -->
+
+            <% images.forEach((img, i) => { %>
+                <div class="image-frame" id="image-frame-<%= i %>">
+                    <img src="<%= img[1] %>"
+                         alt="Result Image <%= i + 1 %>"
+                         idx="<%= img[0] %>"
+                         title="<%= img[0] %>"
+                         class="result-image"
+                         onclick="markImage('image-frame-<%= i %>')">
+                </div>
+            <% }) %>
+        </div>
+        <button id="load-more-button" class="centered-button" style="display: none;">Load More Images</button>
+    </div>
+    <script>
+        let selectedDataset = '<%= searchDataset %>'; // Use the default dataset from the server
+        let selectedSearcher = '<%= defaultSearcher %>';
+        let demo = '<%= demo %>';
+    </script>
+    <script src="/js/search.js"></script>
+</body>
+</html>

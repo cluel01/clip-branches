@@ -1,0 +1,10 @@
+{"name":"unsplash",
+"version":"1.0.0",
+"dataset":{
+    "type":"folder",
+    "format":"csv",
+    "path":"/mnt/unsplash-lite/unsplash_lite_dataset.csv",
+    "image_path":"/mnt/unsplash-lite"
+}
+
+}

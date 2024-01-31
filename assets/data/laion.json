@@ -1,0 +1,10 @@
+{"name":"laion",
+"version":"1.0.0",
+"dataset":{
+    "type":"folder",
+    "format":"csv",
+    "path":"/mnt/laion/laion_dataset_images.csv",
+    "image_path":"/mnt/laion/images"
+}
+
+}
