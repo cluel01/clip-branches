@@ -328,3 +328,27 @@ body {
     color: white;
     cursor: pointer;
 }
+
+.loading-icon {
+    color: #0074D9;
+    font-size: 24px;
+}
+
+.loading-container .fa-spinner {
+    font-size: 24px; /* Adjust size as needed */
+    color: #0074D9; /* Adjust color as needed */
+}
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed; /* or absolute */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.966);
+    z-index: 1000; /* Ensures it's above other content */
+}
+

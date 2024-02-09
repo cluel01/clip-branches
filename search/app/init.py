@@ -146,7 +146,7 @@ def initialize_searcher(search_cfg):
         db_models = {}
         idx_cfg = CFG["kdt_search"]
         for s_name,s_cfg in CFG["searcher"].items():
-            if s_name.startswith("db"):
+            if s_name.lower().startswith("db"):
                 search_inst = DBSearchEngine(CFG["nfeat"],indexes,s_cfg["db_cfg"],s_cfg["njobs"],CFG["seed"],
                                             s_cfg["dtype"],s_cfg["min_box_size"])
             elif s_name.startswith("ens"):

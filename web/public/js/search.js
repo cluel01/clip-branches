@@ -9,8 +9,15 @@ const positiveColor = 'green';
 const negativeColor = 'red';
 
 document.getElementById('finetune-search-button').addEventListener('click', () => {
+    const button = document.getElementById('finetune-search-button');
+    button.disabled = true;
+    
+    document.getElementById('loading-icon').style.display = 'flex';
     sendFineTuneSearchRequest(positiveIndices, negativeIndices,selectedDataset,selectedSearcher);
     //href to results page
+    setTimeout(() => {
+        button.disabled = false;
+    }, 2000);
 });
 
 
@@ -75,7 +82,8 @@ async function sendFineTuneSearchRequest(positiveIndices, negativeIndices,select
         currentIndex = 0;
         return updateResults(data);
     }).then(() => {
-        markImagesSearch()}).catch(error => console.error('Error:', error));
+        markImagesSearch()}).catch(error => console.error('Error:', error))
+    
 }
 
 
@@ -130,6 +138,9 @@ function updateResults(data) {
         if (currentIndex < data.images.length) {
             document.getElementById('load-more-button').style.display = 'block';
         }
+
+        // Hide the loading icon
+        document.getElementById('loading-icon').style.display = 'none';
 
         res_data = data;
 

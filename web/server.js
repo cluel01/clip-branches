@@ -4,13 +4,18 @@ const path = require('path');
 const axios = require('axios');
 const bodyParser = require('body-parser');
 
-const dOptions = ["laion_262m_var","laion_262m_d4","laion_1m","laion_1m_var","laion_1m_d8",,
-                "cifar", 'unsplash_lite', 'unsplash_lite_512',"shutterstock","laion_262m",,"laion_262m_d8"] //TODO retrieve from api
-const sOptions = ["db-maxevals1.0-postTree-stop","db-maxevals0.5-postTree-stop","db-maxevals0.5-topDown-stop","db-maxevals1.0-topDown-stop",
-             "db-maxevals0.5-demo","db-maxevals0.5-min2-stop","db-maxevals1.0-demo-stop",
-                    "ens-small-stop","dtree","ens","ens-small","rf","boxnet1"]    //TODO retrieve from api
+
+const dOptions = {"LAION-262M":"laion_262m_var","CIFAR10":"cifar","Shutterstock":"shutterstock"}
+
+// ["laion_262m_var","laion_262m_d4","laion_1m","laion_1m_var","laion_1m_d8",,
+                // "cifar", 'unsplash_lite', 'unsplash_lite_512',"shutterstock","laion_262m",,"laion_262m_d8"] //TODO retrieve from api
+const sOptions = {"DBranches":"db-maxevals1.0-postTree-stop","DBranches Ensemble":"ens","Decision Tree":"dtree","Random Forest":"rf","BoxNet":"boxnet1"}
+
+// ["db-maxevals1.0-postTree-stop","db-maxevals0.5-postTree-stop","db-maxevals0.5-topDown-stop","db-maxevals1.0-topDown-stop",
+            //  "db-maxevals0.5-demo","db-maxevals0.5-min2-stop","db-maxevals1.0-demo-stop",
+                    // "ens-small-stop","dtree","ens","ens-small","rf","boxnet1"]    //TODO retrieve from api
 const data_size = 150
-const maxTextResults = 30;
+const maxTextResults = 60;
 const maxNegSamples = 100000;
 const negSamples = 30000;
 const maxImages = 1000
@@ -36,18 +41,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Route for the home page
 app.get('/', (req, res) => {
-    const datasetOptions = dOptions; // Array of dataset names
+    const datasetOptions = Object.keys(dOptions);//dOptions; // Array of dataset names
     const defaultDataset = datasetOptions[0]; // Default dataset name
     
 
-    res.render('index',{ datasetOptions: datasetOptions, defaultDataset: defaultDataset });
+    res.render('index',{ datasetOptions: datasetOptions, defaultDataset: defaultDataset,demo:demo });
 });
 
 app.get('/search', async (req, res) => {
-    const searchOptions = sOptions; 
+    const searchOptions = Object.keys(sOptions);//sOptions; 
     const defaultSearcher = searchOptions[0];
     const searchQuery = req.query.query;
-    dataset = req.query.dataset;
+    const dataset_key = req.query.dataset;
+    dataset = dOptions[dataset_key];
 
     try {
         // Assuming you receive an array of image indexes from the first API
@@ -76,7 +82,8 @@ app.post('/finetune-search', async (req, res) => {
     const positiveIndices = req.body.positive;
     const negativeIndices = req.body.negative;
     const dataset = req.body.dataset;
-    const searcher = req.body.searcher;
+    const searcher_key = req.body.searcher;
+    const searcher = sOptions[searcher_key];
     const numNegSamples = req.body.numNegSamples;
     const negativeWeight = req.body.negativeWeight;
     

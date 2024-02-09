@@ -18,7 +18,14 @@
                 <% }); %>
             </div>
         </div>
-        <button class="icon-button"><i class="fas fa-info-circle"></i></button>
+        <button id="helpButton" class="icon-button"><i class="fas fa-info-circle"></i></button>
+    </div>
+
+    <div id="popupBox" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="popupText"></p>
+        </div>
     </div>
 
     <div class="search-container">
@@ -30,10 +37,13 @@
             <span style="color: #FFDC00; font-family: 'Comic Sans MS';">P</span>
             <span style="color: #FF851B; font-family: 'Verdana';">-</span>
             <span style="color: rgb(51, 173, 51);">Branches</span>
-
+        
         </h1> -->
+        <div id="loading-icon" class="loading-icon" style="display:none;">
+            <i class="fas fa-spinner fa-spin"></i>
+        </div>
         <form id="search-form" action="/search" method="get">
-            <input type="text" id="search-box" name="query" placeholder="Search for images" class="search-input">
+            <input type="text" id="search-box" name="query" placeholder="Search for images" class="search-input" autocomplete="off">
             <input type="hidden" id="selected-dataset" name="dataset" value="<%= defaultDataset %>">
             <button type="submit" class="search-button">Search</button>
         </form>
@@ -44,6 +54,7 @@
     </footer>
     <script>
         let selectedDataset = '<%= defaultDataset %>'; // Use the default dataset from the server
+        let demo = '<%= demo %>';
     </script>
     <script src="/js/init.js"></script>
 </body>
