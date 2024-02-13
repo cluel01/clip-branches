@@ -7,13 +7,8 @@ const bodyParser = require('body-parser');
 
 const dOptions = {"LAION-262M":"laion_262m_var","CIFAR10":"cifar","Shutterstock":"shutterstock"}
 
-// ["laion_262m_var","laion_262m_d4","laion_1m","laion_1m_var","laion_1m_d8",,
-                // "cifar", 'unsplash_lite', 'unsplash_lite_512',"shutterstock","laion_262m",,"laion_262m_d8"] //TODO retrieve from api
-const sOptions = {"DBranches":"db-maxevals1.0-postTree-stop","DBranches Ensemble":"ens","Decision Tree":"dtree","Random Forest":"rf","BoxNet":"boxnet1"}
+const sOptions = {"DBranches":"db","DBranches Ensemble":"ens","Decision Tree":"dtree","Random Forest":"rf"}
 
-// ["db-maxevals1.0-postTree-stop","db-maxevals0.5-postTree-stop","db-maxevals0.5-topDown-stop","db-maxevals1.0-topDown-stop",
-            //  "db-maxevals0.5-demo","db-maxevals0.5-min2-stop","db-maxevals1.0-demo-stop",
-                    // "ens-small-stop","dtree","ens","ens-small","rf","boxnet1"]    //TODO retrieve from api
 const data_size = 150
 const maxTextResults = 60;
 const maxNegSamples = 100000;
