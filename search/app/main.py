@@ -96,12 +96,6 @@ async def search(dataset: str, searcher_name: str, search_indices: SearchIndices
 
     idxs_rare = np.array(search_indices.idxs_rare).astype(int)
     idxs_nonrare = np.array(search_indices.idxs_nonrare).astype(int)
-    # idxs_rare = np.array([272479,323384,360438,326145,331138,476013,469481,462873,412529,95794,94170,79114,893128,329335,363062,
-    #                       80184,112084,104188,54513,63963,54901,49819,267420,215854,239557,137465,127642,308395,134979,364419,
-    #                       190573,820351,807225,848196,748594,373919,280200,347164,352097,357045,356220,284222,973215,274147,
-    #                       258680,968313,519958,715399,547,320791,288219,309600,342452,368668,340900,365658,544851,423754,276907,
-    #                       342469,308336]).astype(int)
-    # idxs_nonrare = np.array([]).astype(int)
 
     assert negative_weight > 0
     if negative_weight > 1:
