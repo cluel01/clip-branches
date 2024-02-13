@@ -112,12 +112,6 @@ async def image_from_idx(
     JPEG image
 
     """
-    #TODO remove later
-    if dataset.startswith("laion_262m"):
-        dataset = "laion_262m"
-
-    if dataset.startswith("laion_1m"):
-        dataset = "laion_1m"
 
     dict_dataset = datasets[dataset]
     data = datasets[dataset]["data"]
