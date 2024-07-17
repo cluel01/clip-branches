@@ -14,7 +14,8 @@ This repository contains the source code for the paper *"CLIP-Branches: Interact
 
 ### Pre-requisites
 Before actually running the application and submitting queries, you need to first run through the **offline preprocessing** phase as shown in the figure.
-![Search Framework](./img/framework.png)
+
+<img src="./img/framework.png" width="450" height="320">
 
 This involves the following steps:
 1. **Download Dataset**: Download image datasets of your choice. We provide a script to download the Shutterstock dataset used in our experiments. Please ensure to download the metadata first via the [link](https://drive.google.com/file/d/1mSNAL7u8y39O_fb66f38uLRm1zUnDH9O/view?usp=sharing).
@@ -32,7 +33,8 @@ This involves the following steps:
 
 ### Running the Application
 Now, we have to configure the services and start them. The architecture of our search platform is depicted in the following figure. It consists of the three services: **Search**, **Data**, and **Web**. The Search service is responsible for the actual search functionality, the Data service provides the data for the search service, and the Web service is the user interface for the search service.
-![Architecture](./img/arch.png)
+
+<img src="./img/arch.png" width="300" height="230">
 
 The services are provided as Docker containers and can be started as follows:
 
