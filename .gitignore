@@ -2,7 +2,6 @@
 *.npy
 *.jpeg
 *.jpg
-*.png
 *.pt
 *.mmap
 
