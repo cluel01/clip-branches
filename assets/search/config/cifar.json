@@ -1,0 +1,20 @@
+{
+    "dataset": {
+        "features_path": "cifar10_features_nfeat32.npy",
+        "size": 1000,
+        "num_neg": 150,
+        "features_dim": 32,
+        "dataset": "cifar",
+        "dataset_short": "cifar"
+    },
+    
+    "settings": {
+        "INDEX_LEAF_SIZE": 500,
+        "TEXT_INDEX_STOP_LEAVES": 3000,
+        "MODEL_WEIGHTS": "clip_weights_v6.pth",
+        "ENSEMBLE_N_ESTIMATORS": 25,
+        "TEXT_DTYPE": "uint8",
+        "SEARCH_DTYPE": "uint8"
+
+    }
+}

@@ -10,7 +10,7 @@
 
 
 data/*
-assets/search/*
+assets/search/data/*
 
 build_script.sh
 startup_script.sh

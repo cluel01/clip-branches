@@ -40,22 +40,22 @@ The services are provided as Docker containers and can be started as follows:
 
 4. **Configure Search App**: Configure the search service. Per dataset, you can define your own search procedure and store it in the folder `assets/search/config/`. An example configuration for the CIFAR10 dataset is given in the folder. Afterwards, build the docker image and start the search service.
 
-```docker build -t search -f apps/search/Dockerfile .```
+```docker build -t search -f apps/search/Dockerfile apps/search/.```
 
 ```docker run -d --rm  -p 5000:80    -v ./assets/search/config:/usr/src/app/assets/config:ro  -v ./assets/search/data:/usr/src/app/assets/data:ro -v ./data/indexes:/usr/src/app/indexes --name search search```
 
 5. **Configure Data App**: Configure the data service by creating a JSON config file per dataset in the folder `assets/data/`. An example configuration for the CIFAR10 dataset is given in the folder. Afterwards, build the docker image and start the data service.
 
-```docker build -t data -f apps/data/Dockerfile .```
+```docker build -t data -f apps/data/Dockerfile apps/data/.```
 
-```docker run --rm -d -p 5001:8000 -v ./assets/data/:/opt:ro -v ./assets/data/.env:/usr/src/app/.env:ro -v  ./data/datasets:/mnt:ro --name data data```
+```docker run --rm -d -p 5001:8000 -v ./assets/data/:/opt:ro -v ./assets/data/env:/usr/src/app/.env:ro -v  ./data/datasets:/mnt:ro --name data data```
 
 6. **Configure Web App**:
 Configure the web service by adjusting the file `assets/web/.env` to point to the search and data services as well as define the datasets. Afterwards, build the docker image and start the web service.
 
-```docker build -t web -f apps/web/Dockerfile .```
+```docker build -t web -f apps/web/Dockerfile apps/web/.```
 
-```docker run --rm -d -p 8888:3000 -v ./assets/web/.env:/usr/src/app/.env:ro --name web web```
+```docker run --rm -d -p 8888:3000 -v ./assets/web/env:/usr/src/app/.env:ro --name web web```
 
 7. **Access the Web App and start search**: Access the web application via `http://localhost:8888` in your browser.
 
