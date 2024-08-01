@@ -22,10 +22,10 @@ model = CLIPModelWrapper("ViT-B/32", device=device,freeze_backbone=True,
                          )
 
 
-model.load_state_dict(torch.load("data/clip_weights.pth"))
+model.load_state_dict(torch.load("assets/search/data/clip_weights.pth"))
 
 
-dataset = CLIP_Dataset(root="data/images",labels_path="data/shutterstock_dataset.csv",
+dataset = CLIP_Dataset(root="data/datasets/shutterstock/images",labels_path="data/datasets/shutterstock_dataset.csv",
                        transform=model.preprocess)
 loader = DataLoader(dataset, batch_size=bs, shuffle=False,num_workers=7)
 
@@ -43,4 +43,4 @@ with torch.no_grad():
         N += n
         # embeddings.append(embedding.cpu().numpy())
 # features = np.vstack(embeddings)
-np.save("assets/search/shutterstock_clip_features_d32.npy",features)
+np.save("assets/search/shutterstock_clip_features_d512.npy",features)

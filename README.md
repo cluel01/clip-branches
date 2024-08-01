@@ -26,7 +26,7 @@ This involves the following steps:
 
 ```python preprocess.py```
 
-3. **Extract Features**: Extract image and text features using the CLIP model. The extracted features are stored in a file that can be used in the next steps. Make sure that you have downloaded our finetuned weighs for the CLIP model in advance via this [link](https://drive.google.com/file/d/1vwTrJbQntVuZpPazrpirS7n2ck-okrdg/view?usp=drive_link). Alternatively, you can also use the original CLIP model and weights.
+3. **Extract Features**: Extract image and text features using the CLIP model. The extracted features are stored in a file that can be used in the next steps. Make sure that you have downloaded our finetuned weighs for the CLIP model in advance via this [link](https://drive.google.com/file/d/1vwTrJbQntVuZpPazrpirS7n2ck-okrdg/view?usp=drive_link). Alternatively, you can also use the original CLIP model and weights. Depending on the size of the dataset and if you are using an GPU, this can take some time. We provide a script to extract the features for the Shutterstock dataset and CIFAR10.
 
 ```python extract_features_<shutterstock/cifar>.py```
 
@@ -38,26 +38,26 @@ Now, we have to configure the services and start them. The architecture of our s
 
 The services are provided as Docker containers and can be started as follows:
 
-4. **Configure Search App**: Configure the search service by adjusting the file `assets/search/config.json` to point to the extracted features and the preprocessed data. Afterwards, build the docker image and start the search service.
+4. **Configure Search App**: Configure the search service. Per dataset, you can define your own search procedure and store it in the folder `assets/search/config/`. An example configuration for the CIFAR10 dataset is given in the folder. Afterwards, build the docker image and start the search service.
 
-```docker build -t clip-branches-search -f apps/search/Dockerfile .```
+```docker build -t search -f apps/search/Dockerfile .```
 
-```docker run -p 5000:5000 clip-branches-search```
+```docker run -d --rm  -p 5000:80    -v ./assets/search/config:/usr/src/app/assets/config:ro  -v ./assets/search/data:/usr/src/app/assets/data:ro -v ./data/indexes:/usr/src/app/indexes --name search search```
 
-5. **Configure Data App**: Configure the data service by adjusting the file `assets/data/config.json` to point to the preprocessed data. Afterwards, build the docker image and start the data service.
+5. **Configure Data App**: Configure the data service by creating a JSON config file per dataset in the folder `assets/data/`. An example configuration for the CIFAR10 dataset is given in the folder. Afterwards, build the docker image and start the data service.
 
-```docker build -t clip-branches-data -f apps/data/Dockerfile .```
+```docker build -t data -f apps/data/Dockerfile .```
 
-```docker run -p 5001:5001 clip-branches-data```
+```docker run --rm -d -p 5001:8000 -v ./assets/data/:/opt:ro -v ./assets/data/.env:/usr/src/app/.env:ro -v  ./data/datasets:/mnt:ro --name data data```
 
 6. **Configure Web App**:
-Configure the web service by adjusting the file `assets/web/config.json` to point to the search and data services. Afterwards, build the docker image and start the web service.
+Configure the web service by adjusting the file `assets/web/.env` to point to the search and data services as well as define the datasets. Afterwards, build the docker image and start the web service.
 
-```docker build -t clip-branches-web -f apps/web/Dockerfile .```
+```docker build -t web -f apps/web/Dockerfile .```
 
-```docker run -p 8080:8080 clip-branches-web```
+```docker run --rm -d -p 8888:3000 -v ./assets/web/.env:/usr/src/app/.env:ro --name web web```
 
-7. **Access the Web App and start search**: Access the web application via `http://localhost:8080` in your browser.
+7. **Access the Web App and start search**: Access the web application via `http://localhost:8888` in your browser.
 
 ## Demo Video
 [![Demo Video](https://img.youtube.com/vi/lepPM3zi0l8/0.jpg)](https://youtu.be/lepPM3zi0l8)
@@ -83,5 +83,14 @@ pages = {2719–2723},
 location = {Washington DC, USA},
 series = {SIGIR '24}
 }
+```
+
+## Use FAISS Index
+Instead of using our kd-tree index for NN search of the text query, it is also possible to leverage state-of-the-art index structures for NN-search such as indexes coming from the FAISS library.
+Configure kdt_textsearch in \<dataset\>.json for search service with the following:
+```
+        "type": "faiss",
+        "index_dir": "indexes/{{ dataset.dataset_short }}/text_faiss",
+        "index_file": "{{ dataset.dataset_short }}_flat_index.index",
 ```
 

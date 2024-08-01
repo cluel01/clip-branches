@@ -31,14 +31,14 @@ class L2Normalize(nn.Module):
 
 class CLIPModelWrapper(nn.Module):
     def __init__(self, model, device,train=True,custom_head=True,embed_dim=128,hidden_dim=2048,
-                 freeze_backbone=False,distance='cosine',dtype=torch.float32,mode=None):
+                 freeze_backbone=False,distance='cosine',dtype=torch.float32,mode=None,load_weights=False):
         super().__init__()
         # m,p = clip.load(model, device="cpu", jit=False) #workaround to load float32 weights on gpu
         m = CLIP(**_MODELS[model])
 
-        if model == "ViT-B/32":
+        if model == "ViT-B/32" and load_weights:
             print("Loading ViT-B/32 pretrained weights")
-            m.load_state_dict(torch.load("assets/ViT-B-32.pt", map_location="cpu"))
+            m.load_state_dict(torch.load("assets/data/ViT-B-32.pt", map_location="cpu"))
 
         self.custom_head = custom_head
         self.device = device

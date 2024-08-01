@@ -1,0 +1,10 @@
+{"name":"cifar",
+"version":"1.0.0",
+"dataset":{
+    "type":"folder",
+    "format":"csv",
+    "path":"/mnt/cifar_dataset.csv",
+    "image_path":"/mnt/cifar"
+}
+
+}

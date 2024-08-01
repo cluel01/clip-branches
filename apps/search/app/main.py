@@ -4,7 +4,10 @@ Main module for the FastAPI search service.
 
 from init import initialize_searcher
 from utils import quantize_features,store_results
-from config import Settings
+# from config import Settings
+# import config
+from config import datasets_config
+# from config import settings,dataset_config
 
 import os
 import pathlib
@@ -47,7 +50,9 @@ app.add_middleware(
 )
 
 #Initialization of the search service
-cfg = Settings.Config.cfg
+# cfg = Settings.Config.cfg
+cfg = datasets_config
+print("cfg: ",cfg)
 searchers = initialize_searcher(cfg)
 
 # No empty response
@@ -67,7 +72,7 @@ async def ping():
 @app.get("/get_available_searchers")
 async def get_available_searchers():
     s_dict = {}
-    cfg = Settings.Config.cfg
+    cfg = datasets_config
     for dataset in cfg.keys():
         s_dataset = []
         for s in cfg[dataset]["searcher"].keys():

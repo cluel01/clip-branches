@@ -1,0 +1,93 @@
+{
+    "feature_file": "assets/data/{{ dataset.features_path }}",
+    "features_inmemory": true,
+    "size_dataset": {{ dataset.size }},
+    "non_rare_idxs_num": {{ dataset.num_neg }},
+    "non_rare_idxs": "auto",
+    "nfeat": {{ dataset.features_dim }},
+    "dataset_name": "{{ dataset.dataset }}",
+    "dataset_name_short": "{{ dataset.dataset_short }}",
+    "seed": 42,
+    "kdt_search": {
+        "index_dir": "indexes/{{ dataset.dataset_short }}",
+        "index_file": null,
+        "leafsize": {{ settings.INDEX_LEAF_SIZE }},
+        "dtype": "{{ settings.SEARCH_DTYPE }}",
+        "build_inmemory": true,
+        "fidx_cfg": {
+            "nfeat": "variable",
+            "cfg": {
+                "4": 64,
+                "6": 32,
+                "8": 8
+            }
+        }
+    },
+    "kdt_textsearch": {
+        "type": "kdtree",
+        "index_dir": "indexes/{{ dataset.dataset_short }}",
+        "leafsize": {{ settings.INDEX_LEAF_SIZE }},
+        "dtype": "{{ settings.TEXT_DTYPE }}",
+        "inmemory": false,
+        "build_inmemory": true,
+        "fidx_cfg": {
+            "nfeat": {{ dataset.features_dim }},
+            "nind": 1
+        },
+        "stop_leaves": {{ settings.TEXT_INDEX_STOP_LEAVES }}
+    },
+    "text_searcher": {
+        "model_weights_path": "assets/data/{{ settings.MODEL_WEIGHTS }}",
+        "model_type": "CLIP",
+        "clip_cfg": {
+            "model": "ViT-B/32",
+            "device": "cpu",
+            "train": false,
+            "custom_head": true,
+            "embed_dim": 32,
+            "hidden_dim": 8192
+        }
+    },
+    "searcher": {
+        "db": {
+            "display_name": "DecisionBranches Demo",
+            "db_cfg": {
+                "max_nbox": 30,
+                "top_down": false,
+                "max_evals": "all",
+                "stop_infinite": true,
+                "postTree": true,
+                "min_pts": "auto"
+            },
+            "njobs": 1,
+            "dtype": "float64",
+            "min_box_size": null
+        },
+        "ens": {
+            "ens_nestimators": {{ settings.ENSEMBLE_N_ESTIMATORS }},
+            "db_cfg": {
+                "max_nbox": 30,
+                "top_down": false,
+                "max_evals": 0.5,
+                "stop_infinite": false,
+                "postTree": false,
+                "min_pts": "auto"
+            },
+            "njobs": null,
+            "display_name": "DBEnsemble",
+            "dtype": "float64"
+        },
+        "dtree": {
+            "dtree_cfg": {},
+            "display_name": "Decision Tree",
+            "dtype": "float32"
+        },
+        "rf": {
+            "rf_cfg": {
+                "n_estimators": {{ settings.ENSEMBLE_N_ESTIMATORS }}
+            },
+            "display_name": "Random Forest",
+            "dtype": "float32"
+        }
+    }
+}

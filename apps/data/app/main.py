@@ -1,13 +1,9 @@
 import io
-import itertools
-import json
-import math
+
 import os
 
 from PIL import Image
 import numpy as np
-import pandas as pd
-from typing import Generator
 from fastapi import FastAPI
 from fastapi.responses import Response
 from fastapi.responses import JSONResponse
@@ -15,33 +11,12 @@ from fastapi.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 from imageio import v3 as iio
 from .config import (
-    Settings,
-    DatasetsList,
-    create_filepath_dict,
-    set_performance_environment_variables
+    datasets,
+    Settings
+    #set_performance_environment_variables
 )
 
-
-# initialize settings
 settings = Settings()
-filepath = create_filepath_dict(settings)
-set_performance_environment_variables()
-
-
-
-datasets = {}
-for key, path in filepath.items():
-    print(f"######## Load Dataset: {key} ##############")
-    with open(path, "r") as f:
-        cfg = json.load(f)
-        if cfg["dataset"]["type"] == "folder":
-            if cfg["dataset"]["format"] == "csv":
-                df = pd.read_csv(os.path.join(settings.assets_path,cfg["dataset"]["path"]))
-        elif cfg["dataset"]["type"] == "array":
-            if cfg["dataset"]["format"] == "npy":
-                df = np.load(os.path.join(settings.assets_path,cfg["dataset"]["path"]))
-        datasets[key] = {"cfg":cfg["dataset"], "data": df}
-
 
 app = FastAPI()
 
@@ -80,9 +55,9 @@ async def pong():
 
 
 # return available datasets
-@app.get("/datasets", response_model=DatasetsList)
+@app.get("/datasets")
 async def list_datasets():
-    return {"datasets": list(filepath.keys())}
+    return {"datasets": list(datasets.keys())}
 
 
 @app.get(

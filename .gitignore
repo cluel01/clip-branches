@@ -5,8 +5,11 @@
 *.pt
 *.mmap
 
+
 *.c
 
+
+data/*
 assets/search/*
 
 build_script.sh
